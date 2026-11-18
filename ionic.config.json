@@ -1,0 +1,7 @@
+{
+  "name": "time-off-manager",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react-vite"
+}
