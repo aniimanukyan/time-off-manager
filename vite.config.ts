@@ -5,6 +5,9 @@ import { defineConfig } from 'vitest/config';
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react(), legacy()],
+  server: {
+    port: 3000,
+  },
   test: {
     environment: 'jsdom',
     setupFiles: './src/setupTests.ts',

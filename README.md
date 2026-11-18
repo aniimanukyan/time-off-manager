@@ -9,6 +9,7 @@ A mobile app for managing time off, built with [Ionic React](https://ionicframew
 - **UI:** Ionic React 9, React 19, Ionicons
 - **Routing:** React Router 6 via `@ionic/react-router`
 - **Build tooling:** Vite 8, TypeScript 5.9
+- **Styles:** Sass (SCSS)
 - **Native runtime:** Capacitor 8 (App, Haptics, Keyboard, Status Bar plugins)
 - **Testing:** Vitest + Testing Library (unit), Playwright (end-to-end)
 - **Code quality:** ESLint (`@ionic/eslint-config`), Prettier (`@ionic/prettier-config`)
@@ -17,7 +18,7 @@ A mobile app for managing time off, built with [Ionic React](https://ionicframew
 
 ### Prerequisites
 
-- Node.js (a current LTS release) and npm
+- Node.js 22 (≥ 22.22.2), 24 (≥ 24.15.0) or 26+, and npm. Unit tests use jsdom, which does not run on Node 23 or other odd-numbered versions.
 - Optional, for native builds: Android Studio and/or Xcode
 
 ### Install and run
@@ -27,7 +28,7 @@ npm install
 npm run dev
 ```
 
-The dev server runs at http://localhost:5173.
+The dev server runs at http://localhost:3000.
 
 ## Scripts
 
@@ -86,6 +87,6 @@ After changing web code, run `npm run build && npx cap sync` to update the nativ
 └── vite.config.ts        # Vite and Vitest configuration
 ```
 
-## Theming
+## Styling and theming
 
-Theme variables are in `src/theme/variables.css`. Dark mode follows the system setting (`dark.system.css` in `src/App.tsx`); see the [Ionic dark mode docs](https://ionicframework.com/docs/theming/dark-mode) to change this.
+Styles are written in SCSS, with each stylesheet kept next to its component. Theme variables are in `src/theme/variables.scss`. Dark mode follows the system setting (`dark.system.css` in `src/App.tsx`); see the [Ionic dark mode docs](https://ionicframework.com/docs/theming/dark-mode) to change this.
