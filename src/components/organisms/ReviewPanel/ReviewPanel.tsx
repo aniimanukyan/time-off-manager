@@ -1,4 +1,4 @@
-import { useState, useTransition, type FC } from 'react';
+import { useId, useState, useTransition, type FC } from 'react';
 
 import { LEAVE_TYPE_COLORS, LEAVE_TYPE_LABELS, type RequestStatus, type TeamRequest } from '../../../types/timeOff';
 import { formatShortRange, pluralDays } from '../../../utils/dates';
@@ -17,6 +17,7 @@ const ReviewPanel: FC<ReviewPanelProps> = ({ request, onDecide, onClose }) => {
   const [note, setNote] = useState('');
   const [submitting, startSubmit] = useTransition();
   const firstName = request.employee.split(' ')[0];
+  const nameId = useId();
 
   const decide = (status: RequestStatus) =>
     startSubmit(async () => {
@@ -25,14 +26,16 @@ const ReviewPanel: FC<ReviewPanelProps> = ({ request, onDecide, onClose }) => {
     });
 
   return (
-    <article aria-label="Review request" className={styles.panel}>
+    <article aria-labelledby={nameId} className={styles.panel}>
       <div>
-        <Button label="Approvals" variant="ghost" icon="back" onClick={onClose} />
+        <Button label="Approvals" ariaLabel="Back to approvals" variant="ghost" icon="back" onClick={onClose} />
       </div>
 
       <div className={styles.header}>
         <Avatar initials={toInitials(request.employee)} />
-        <h2 className={styles.name}>{request.employee}</h2>
+        <h2 id={nameId} className={styles.name}>
+          {request.employee}
+        </h2>
         <StatusBadge status={request.status} />
       </div>
 

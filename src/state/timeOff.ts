@@ -1,4 +1,4 @@
-import { BALANCES } from '../data/api';
+import { BALANCES } from '../api/timeOff';
 import type { Page } from '../types/pagination';
 import type { Balance, LeaveRequest, LeaveType, Segment, TeamRequest, TimeOffRequest } from '../types/timeOff';
 

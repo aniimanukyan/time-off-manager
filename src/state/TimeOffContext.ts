@@ -10,6 +10,6 @@ export type TimeOffStore = TimeOffState & {
   decideRequest: (request: TeamRequest, status: RequestStatus, decision: string) => Promise<void>;
 };
 
-export const TimeOffContext = createContext<TimeOffStore>(null!);
+export const TimeOffContext = createContext({} as TimeOffStore);
 
 export const useTimeOff = (): TimeOffStore => use(TimeOffContext);

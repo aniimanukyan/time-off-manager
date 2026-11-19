@@ -10,6 +10,7 @@ type ButtonVariant = 'primary' | 'secondary' | 'danger' | 'ghost';
 
 type ButtonProps = {
   label: string;
+  ariaLabel?: string;
   variant?: ButtonVariant;
   icon?: keyof typeof ICONS;
   iconOnly?: boolean;
@@ -30,6 +31,7 @@ const VARIANT_PROPS: Record<ButtonVariant, { color?: ThemeColor; fill: 'solid' |
 
 const Button: FC<ButtonProps> = ({
   label,
+  ariaLabel,
   variant = 'primary',
   icon,
   iconOnly,
@@ -56,6 +58,7 @@ const Button: FC<ButtonProps> = ({
       type={type}
       color={color}
       fill={fill}
+      aria-label={ariaLabel}
       expand={full ? 'block' : undefined}
       disabled={disabled}
       onClick={onClick}

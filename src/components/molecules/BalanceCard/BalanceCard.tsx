@@ -1,7 +1,8 @@
 import { IonCard, IonCardContent, IonProgressBar } from '@ionic/react';
 import type { FC } from 'react';
 
-import { LEAVE_TYPE_COLORS, describeBalance, type Balance } from '../../../types/timeOff';
+import { LEAVE_TYPE_COLORS, type Balance } from '../../../types/timeOff';
+import { describeBalance } from '../../../utils/balance';
 
 import styles from './BalanceCard.module.scss';
 

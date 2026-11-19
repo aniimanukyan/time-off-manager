@@ -1,12 +1,13 @@
 import { IonContent, IonModal, IonPage } from '@ionic/react';
-import { useState, type FC } from 'react';
+import { useRef, useState, type FC } from 'react';
 
 import { PageTitle } from '../../components/atoms';
 import { RoleSwitch } from '../../components/molecules';
 import { ListTabs, ReviewPanel, type Tab } from '../../components/organisms';
+import { usePageTitle } from '../../hooks/usePageTitle';
 import { useSession } from '../../state/SessionContext';
 import { useTimeOff } from '../../state/TimeOffContext';
-import type { TeamRequest } from '../../types/timeOff';
+import type { RequestStatus, TeamRequest } from '../../types/timeOff';
 
 import styles from './Supervisor.module.scss';
 
@@ -14,6 +15,9 @@ const Supervisor: FC = () => {
   const { user, setRole } = useSession();
   const { lists, loadList, decideRequest } = useTimeOff();
   const [selected, setSelected] = useState<TeamRequest>();
+  const title = useRef<HTMLHeadingElement>(null);
+  const decided = useRef(false);
+  usePageTitle('Approvals');
   const [reviewOpen, setReviewOpen] = useState(false);
 
   const tabs: Tab[] = [
@@ -40,12 +44,25 @@ const Supervisor: FC = () => {
   };
   const closeReview = () => setReviewOpen(false);
 
+  const decide = async (request: TeamRequest, status: RequestStatus, decision: string) => {
+    await decideRequest(request, status, decision);
+    decided.current = true;
+  };
+
+  const onReviewDismissed = () => {
+    closeReview();
+    if (decided.current) {
+      requestAnimationFrame(() => title.current?.focus());
+    }
+    decided.current = false;
+  };
+
   return (
     <IonPage>
       <IonContent>
         <div className={styles.page}>
           <div className={styles.header}>
-            <PageTitle title="Approvals" />
+            <PageTitle ref={title} title="Approvals" />
             <RoleSwitch role={user.role} onChange={setRole} />
           </div>
           <ListTabs
@@ -58,11 +75,9 @@ const Supervisor: FC = () => {
         </div>
       </IonContent>
 
-      <IonModal isOpen={reviewOpen} aria-label="Review request" onDidDismiss={closeReview}>
+      <IonModal isOpen={reviewOpen} aria-label="Review request" onDidDismiss={onReviewDismissed}>
         <IonContent>
-          {selected && (
-            <ReviewPanel key={selected.id} request={selected} onDecide={decideRequest} onClose={closeReview} />
-          )}
+          {selected && <ReviewPanel key={selected.id} request={selected} onDecide={decide} onClose={closeReview} />}
         </IonContent>
       </IonModal>
     </IonPage>

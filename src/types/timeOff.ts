@@ -50,8 +50,3 @@ type BalanceBase = {
 
 export type Balance =
   (BalanceBase & { limit: number; available: number }) | (BalanceBase & { limit: null; used: number });
-
-export const describeBalance = (balance: Balance): { value: number; unit: string } =>
-  balance.limit === null
-    ? { value: balance.used, unit: 'used' }
-    : { value: balance.available, unit: `of ${balance.limit}` };

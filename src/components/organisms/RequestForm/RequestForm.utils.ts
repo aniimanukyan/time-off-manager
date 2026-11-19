@@ -2,12 +2,12 @@ import type { ComponentProps } from 'react';
 
 import {
   LEAVE_TYPE_LABELS,
-  describeBalance,
   type Balance,
   type DateRange,
   type LeaveType,
   type NewTimeOffRequest,
 } from '../../../types/timeOff';
+import { describeBalance } from '../../../utils/balance';
 import { countWorkdays, pluralDays } from '../../../utils/dates';
 import type { InfoBanner } from '../../atoms';
 
@@ -30,7 +30,9 @@ type Summary = {
 };
 
 export const getSummary = (balance: Balance, days: number): Summary => {
-  if (days === 0) return { tone: 'err', title: 'No working days selected', text: 'These dates fall on a weekend.' };
+  if (days === 0) {
+    return { tone: 'err', title: 'No working days selected', text: 'These dates fall on a weekend.' };
+  }
 
   const title = pluralDays(days, 'working day');
   if (balance.limit === null) {

@@ -23,6 +23,7 @@ import {
   Timeline,
   TypeSelector,
 } from '../../components/molecules';
+import { usePageTitle } from '../../hooks/usePageTitle';
 import type { Role } from '../../state/SessionContext';
 import type { DateRange, LeaveType, Segment } from '../../types/timeOff';
 
@@ -37,6 +38,7 @@ const Home: FC = () => {
   const [range, setRange] = useState<DateRange>({ start: '', end: '' });
   const [shown, setShown] = useState(8);
   const [role, setRole] = useState<Role>('employee');
+  usePageTitle('Components');
 
   return (
     <IonPage>
@@ -164,7 +166,7 @@ const Home: FC = () => {
           </section>
 
           <section className={styles.section} aria-label="List pager">
-            <ListPager total={23} shown={shown} onLoadMore={() => setShown((s) => Math.min(s + 8, 23))} />
+            <ListPager total={23} shown={shown} onLoadMore={() => setShown((prev) => Math.min(prev + 8, 23))} />
           </section>
         </div>
       </IonContent>

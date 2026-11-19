@@ -26,12 +26,14 @@ type ListTabsProps = {
 };
 
 const ListTabs: FC<ListTabsProps> = ({ ariaLabel, tabs, onLoad, onSelect, paginated }) => {
-  const [active, setActive] = useState(tabs[0].segment);
-  const tab = tabs.find((t) => t.segment === active)!;
-  const { page } = tab;
+  const [activeIndex, setActiveIndex] = useState(0);
+  const tab = tabs[activeIndex];
+  const { segment: active, page } = tab;
 
   useEffect(() => {
-    if (!page) onLoad(active);
+    if (!page) {
+      onLoad(active);
+    }
   }, [active, page, onLoad]);
 
   return (
@@ -39,14 +41,14 @@ const ListTabs: FC<ListTabsProps> = ({ ariaLabel, tabs, onLoad, onSelect, pagina
       <SegmentedControl
         ariaLabel={ariaLabel}
         value={active}
-        onChange={setActive}
+        onChange={(segment) => setActiveIndex(tabs.findIndex((item) => item.segment === segment))}
         options={tabs.map(({ segment, label, page }) => ({
           value: segment,
           label: page ? `${label} · ${page.total}` : label,
         }))}
       />
 
-      <div className={styles.panel}>
+      <div role="tabpanel" aria-label={tab.label} aria-busy={!page} className={styles.panel}>
         {!page ? (
           <IonSpinner aria-label="Loading requests" className={styles.spinner} />
         ) : page.items.length === 0 ? (

@@ -25,7 +25,9 @@ const RequestForm: FC<RequestFormProps> = ({ balances, onSubmit, onClose }) => {
 
   const submit = (event: FormEvent) => {
     event.preventDefault();
-    if (!canSubmit) return;
+    if (!canSubmit) {
+      return;
+    }
     startSubmit(async () => {
       await onSubmit(request);
       onClose();

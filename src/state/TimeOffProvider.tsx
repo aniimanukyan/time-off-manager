@@ -1,6 +1,6 @@
 import { useCallback, useReducer, type FC, type ReactNode } from 'react';
 
-import * as api from '../data/api';
+import * as api from '../api/timeOff';
 
 import { TimeOffContext, type TimeOffStore } from './TimeOffContext';
 import { initialState, timeOffReducer } from './timeOff';

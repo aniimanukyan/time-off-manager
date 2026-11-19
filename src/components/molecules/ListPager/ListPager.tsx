@@ -12,9 +12,9 @@ type ListPagerProps = {
 const ListPager: FC<ListPagerProps> = ({ total, shown, onLoadMore }) => {
   const hasMore = shown < total;
 
-  const handleInfinite = async (e: InfiniteScrollCustomEvent) => {
+  const handleInfinite = async (event: InfiniteScrollCustomEvent) => {
     await onLoadMore?.();
-    await e.target.complete();
+    await event.target.complete();
   };
 
   return (

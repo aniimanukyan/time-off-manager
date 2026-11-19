@@ -28,7 +28,9 @@ const DatePicker: FC<DatePickerProps> = ({ start, end, min, onChange }) => {
         value={end || start || undefined}
         highlightedDates={(iso) => getHighlight(range, toIsoDate(iso))}
         onIonChange={({ detail: { value } }) => {
-          if (typeof value === 'string') onChange(nextRange(range, toIsoDate(value)));
+          if (typeof value === 'string') {
+            onChange(nextRange(range, toIsoDate(value)));
+          }
         }}
       />
     </div>

@@ -9,6 +9,6 @@ export type SessionStore = {
   setRole: (role: Role) => void;
 };
 
-export const SessionContext = createContext<SessionStore>(null!);
+export const SessionContext = createContext({} as SessionStore);
 
 export const useSession = (): SessionStore => use(SessionContext);

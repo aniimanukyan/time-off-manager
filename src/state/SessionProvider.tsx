@@ -10,9 +10,7 @@ const MOCK_USERS: Record<Role, User> = {
 };
 
 const SessionProvider: FC<{ children: ReactNode }> = ({ children }) => {
-  const [user, setUser] = useState(
-    () => MOCK_USERS[localStorage.getItem(STORAGE_KEY) as Role ?? 'employee'],
-  );
+  const [user, setUser] = useState(() => MOCK_USERS[(localStorage.getItem(STORAGE_KEY) as Role) ?? 'employee']);
 
   const setRole = (role: Role) => {
     localStorage.setItem(STORAGE_KEY, role);

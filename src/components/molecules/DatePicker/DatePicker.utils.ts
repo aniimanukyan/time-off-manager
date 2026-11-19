@@ -15,8 +15,12 @@ const BETWEEN: Highlight = {
 export const isPickingEnd = ({ start, end }: DateRange): boolean => !!start && !end;
 
 export const getHighlight = ({ start, end }: DateRange, day: IsoDate): Highlight | undefined => {
-  if (day === start || day === end) return EDGE;
-  if (start && end && day > start && day < end) return BETWEEN;
+  if (day === start || day === end) {
+    return EDGE;
+  }
+  if (start && end && day > start && day < end) {
+    return BETWEEN;
+  }
   return undefined;
 };
 

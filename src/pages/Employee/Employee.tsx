@@ -4,6 +4,7 @@ import { useState, type FC } from 'react';
 import { Button, PageTitle } from '../../components/atoms';
 import { BalanceCard, RoleSwitch } from '../../components/molecules';
 import { ListTabs, RequestForm, type Tab } from '../../components/organisms';
+import { usePageTitle } from '../../hooks/usePageTitle';
 import { useSession } from '../../state/SessionContext';
 import { useTimeOff } from '../../state/TimeOffContext';
 
@@ -14,6 +15,7 @@ const Employee: FC = () => {
   const { balances, lists, loadList, submitRequest } = useTimeOff();
   const [formOpen, setFormOpen] = useState(false);
   const closeForm = () => setFormOpen(false);
+  usePageTitle('My time off');
 
   const tabs: Tab[] = [
     { segment: 'upcoming', label: 'Upcoming', page: lists.upcoming, emptyTitle: 'No upcoming time off' },

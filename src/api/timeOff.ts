@@ -10,9 +10,9 @@ import type {
   TimeOffRequest,
 } from '../types/timeOff';
 
-import employee from './employee.json';
-import { mockResponse } from './mockResponse';
-import supervisor from './supervisor.json';
+import employee from './mock/employee.json';
+import { mockResponse } from './mock/mockResponse';
+import supervisor from './mock/supervisor.json';
 
 const db = {
   upcoming: employee.upcoming,
@@ -42,7 +42,7 @@ export const createRequest = (request: NewTimeOffRequest): Promise<TimeOffReques
 
 export const decideRequest = (request: TeamRequest, status: RequestStatus, decision: string): Promise<TeamRequest> => {
   const decided: TeamRequest = { ...request, status, decision: decision || undefined };
-  db.pending = db.pending.filter((r) => r.id !== request.id);
+  db.pending = db.pending.filter((row) => row.id !== request.id);
   db.decided = [decided, ...db.decided];
   return mockResponse(decided);
 };
