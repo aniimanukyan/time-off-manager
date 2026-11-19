@@ -1,4 +1,5 @@
 import { IonInfiniteScroll, IonInfiniteScrollContent, type InfiniteScrollCustomEvent } from '@ionic/react';
+import type { FC } from 'react';
 
 import styles from './ListPager.module.scss';
 
@@ -9,14 +10,16 @@ type ListPagerProps = {
   onLoadMore?: () => void;
 };
 
-const ListPager: React.FC<ListPagerProps> = ({ total, shown, noun = 'requests', onLoadMore }) => {
+const getStatusText = (total: number, visible: number, noun: string): string => {
+  if (total === 0) return `No ${noun}`;
+  if (visible < total) return `${visible} of ${total} ${noun}`;
+  return `That’s all · ${total} ${noun}`;
+};
+
+const ListPager: FC<ListPagerProps> = ({ total, shown, noun = 'requests', onLoadMore }) => {
   const visible = Math.min(shown, total);
   const hasMore = visible < total;
-
-  let text: string;
-  if (total === 0) text = `No ${noun}`;
-  else if (hasMore) text = `${visible} of ${total} ${noun}`;
-  else text = `That’s all · ${total} ${noun}`;
+  const text = getStatusText(total, visible, noun);
 
   const handleInfinite = (e: InfiniteScrollCustomEvent) => {
     onLoadMore?.();

@@ -1,19 +1,11 @@
 import { IonCard, IonCardContent, IonProgressBar } from '@ionic/react';
+import type { FC } from 'react';
 
-import { LEAVE_TYPE_COLORS, type LeaveType } from '../../../types/timeOff';
+import { LEAVE_TYPE_COLORS, type Balance } from '../../../types/timeOff';
 
 import styles from './BalanceCard.module.scss';
 
-type BalanceCardProps = {
-  leaveType: LeaveType;
-  label: string;
-  value: string;
-  unit: string;
-  progress: number;
-  note: string;
-};
-
-const BalanceCard: React.FC<BalanceCardProps> = ({ leaveType, label, value, unit, progress, note }) => {
+const BalanceCard: FC<Balance> = ({ leaveType, value, unit, progress, note }) => {
   const color = LEAVE_TYPE_COLORS[leaveType];
 
   return (
@@ -21,7 +13,7 @@ const BalanceCard: React.FC<BalanceCardProps> = ({ leaveType, label, value, unit
       <IonCardContent className={styles.content}>
         <span className={styles.label}>
           <span aria-hidden="true" className={`${styles.dot} ion-color-${color}`} />
-          {label}
+          {leaveType}
         </span>
         <span className={styles.value}>
           {value} <span className={styles.unit}>{unit}</span>

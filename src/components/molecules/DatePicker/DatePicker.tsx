@@ -1,4 +1,5 @@
 import { IonDatetime } from '@ionic/react';
+import type { FC } from 'react';
 
 import styles from './DatePicker.module.scss';
 
@@ -15,7 +16,7 @@ const todayIso = () => {
   return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
 };
 
-const DatePicker: React.FC<DatePickerProps> = ({ start, end, min }) => {
+const DatePicker: FC<DatePickerProps> = ({ start, end, min }) => {
   const pickingEnd = start && !end;
 
   const highlight = (iso: string) => {

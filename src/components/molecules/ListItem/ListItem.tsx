@@ -1,4 +1,5 @@
 import { IonItem } from '@ionic/react';
+import type { FC } from 'react';
 
 import { LEAVE_TYPE_COLORS, type LeaveType, type RequestStatus } from '../../../types/timeOff';
 import { Avatar, StatusBadge } from '../../atoms';
@@ -7,7 +8,7 @@ import styles from './ListItem.module.scss';
 
 type ListItemExtraTone = 'heavy' | 'some' | 'none';
 
-type ListItemData = {
+export type ListItemData = {
   id: string;
   title: string;
   leaveType: LeaveType;
@@ -31,7 +32,7 @@ const EXTRA_COLOR: Record<ListItemExtraTone, string> = {
   none: 'cancelled',
 };
 
-const ListItem: React.FC<ListItemProps> = ({ item, onSelect }) => (
+const ListItem: FC<ListItemProps> = ({ item, onSelect }) => (
   <IonItem
     button={!!onSelect}
     detail={false}

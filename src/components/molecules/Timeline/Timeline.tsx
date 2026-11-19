@@ -1,4 +1,5 @@
 import { IonItem, IonLabel, IonList } from '@ionic/react';
+import type { FC } from 'react';
 
 import styles from './Timeline.module.scss';
 
@@ -21,7 +22,7 @@ const TONE_COLOR: Record<TimelineTone, string> = {
   cancelled: 'medium',
 };
 
-const Timeline: React.FC<TimelineProps> = ({ steps }) => (
+const Timeline: FC<TimelineProps> = ({ steps }) => (
   <IonList lines="none" className={styles.list}>
     {/* TODO: replace idx with id from database */}
     {steps.map((step, i) => (

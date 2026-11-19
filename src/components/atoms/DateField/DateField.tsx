@@ -1,3 +1,5 @@
+import type { FC } from 'react';
+
 import styles from './DateField.module.scss';
 
 type DateFieldProps = {
@@ -5,7 +7,7 @@ type DateFieldProps = {
   value?: string;
 };
 
-const DateField: React.FC<DateFieldProps> = ({ label, value }) => (
+const DateField: FC<DateFieldProps> = ({ label, value }) => (
   <div className={styles.field}>
     <span className={styles.label}>{label}</span>
     <span className={styles.value}>{value || 'Select'}</span>

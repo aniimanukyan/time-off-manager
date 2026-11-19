@@ -1,4 +1,5 @@
 import { IonBadge } from '@ionic/react';
+import type { FC } from 'react';
 
 import type { RequestStatus } from '../../../types/timeOff';
 
@@ -9,7 +10,7 @@ type StatusBadgeProps = {
   slot?: string;
 };
 
-const StatusBadge: React.FC<StatusBadgeProps> = ({ status, slot }) => (
+const StatusBadge: FC<StatusBadgeProps> = ({ status, slot }) => (
   <IonBadge slot={slot} color={status.toLowerCase()} className={styles.badge}>
     {status}
   </IonBadge>

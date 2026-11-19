@@ -1,7 +1,8 @@
 import { IonSelect, IonSelectOption } from '@ionic/react';
 import { chevronDown } from 'ionicons/icons';
+import type { FC } from 'react';
 
-import { LEAVE_TYPE_LABELS, type LeaveType } from '../../../types/timeOff';
+import { LEAVE_TYPES, LEAVE_TYPE_LABELS, type LeaveType } from '../../../types/timeOff';
 
 import styles from './TypeSelector.module.scss';
 
@@ -11,9 +12,7 @@ type TypeSelectorProps = {
   onChange: (value: LeaveType) => void;
 };
 
-const LEAVE_TYPES = Object.keys(LEAVE_TYPE_LABELS) as LeaveType[];
-
-const TypeSelector: React.FC<TypeSelectorProps> = ({ value, hint }) => (
+const TypeSelector: FC<TypeSelectorProps> = ({ value, hint }) => (
   <IonSelect
     className={styles.select}
     label="Time off type"

@@ -1,33 +1,36 @@
 import { IonLabel, IonSegment, IonSegmentButton } from '@ionic/react';
+import type { FC } from 'react';
+
+import type { RequestSegment } from '../../../types/timeOff';
 
 import styles from './SegmentedControl.module.scss';
 
-type SegmentOption<T extends string = string> = {
-  value: T;
+type SegmentOption = {
+  value: RequestSegment;
   label: string;
 };
 
-type SegmentedControlProps<T extends string = string> = {
-  options: SegmentOption<T>[];
-  value: T;
+type SegmentedControlProps = {
+  options: SegmentOption[];
+  value: RequestSegment;
   ariaLabel: string;
-  onChange: (value: T) => void;
+  onChange: (value: RequestSegment) => void;
 };
 
-function SegmentedControl<T extends string = string>({
-  options,
-  value,
-  ariaLabel,
-}: SegmentedControlProps<T>): React.JSX.Element {
-  return (
-    <IonSegment mode="ios" aria-label={ariaLabel} value={value} className={styles.segment} onIonChange={() => {}}>
-      {options.map((o) => (
-        <IonSegmentButton key={o.value} value={o.value} className={styles.option}>
-          <IonLabel>{o.label}</IonLabel>
-        </IonSegmentButton>
-      ))}
-    </IonSegment>
-  );
-}
+const SegmentedControl: FC<SegmentedControlProps> = ({ options, value, ariaLabel, onChange }) => (
+  <IonSegment
+    mode="ios"
+    aria-label={ariaLabel}
+    value={value}
+    className={styles.segment}
+    onIonChange={(event) => onChange(event.detail.value as RequestSegment)}
+  >
+    {options.map((option) => (
+      <IonSegmentButton key={option.value} value={option.value} className={styles.option}>
+        <IonLabel>{option.label}</IonLabel>
+      </IonSegmentButton>
+    ))}
+  </IonSegment>
+);
 
 export default SegmentedControl;

@@ -1,4 +1,5 @@
 import { IonToast } from '@ionic/react';
+import type { FC } from 'react';
 
 import styles from './Toast.module.scss';
 
@@ -12,13 +13,7 @@ type ToastProps = {
   onDismiss: () => void;
 };
 
-const Toast: React.FC<ToastProps> = ({
-  isOpen,
-  message,
-  actionLabel = 'Undo',
-  duration = 5000,
-  position = 'bottom',
-}) => (
+const Toast: FC<ToastProps> = ({ isOpen, message, actionLabel = 'Undo', duration = 5000, position = 'bottom' }) => (
   <IonToast
     isOpen={isOpen}
     message={message}

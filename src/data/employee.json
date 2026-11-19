@@ -1,0 +1,47 @@
+{
+  "balances": [
+    { "leaveType": "Vacation", "value": 12, "unit": "of 25", "progress": 0.48, "note": "After 8 pending" },
+    { "leaveType": "Sick", "value": 2, "unit": "used", "progress": 0.12, "note": "No annual limit" },
+    { "leaveType": "Personal", "value": 1, "unit": "of 3", "progress": 0.33, "note": "1 booked · 4 Dec" }
+  ],
+  "upcoming": [
+    { "id": "u1", "leaveType": "Vacation", "start": "2026-12-21", "end": "2026-12-30", "days": 8, "status": "Pending" },
+    { "id": "u2", "leaveType": "Personal", "start": "2026-12-04", "end": "2026-12-04", "days": 1, "status": "Approved" }
+  ],
+  "past": [
+    {
+      "id": "p1",
+      "leaveType": "Vacation",
+      "start": "2026-08-03",
+      "end": "2026-08-07",
+      "days": 5,
+      "status": "Approved"
+    },
+    { "id": "p2", "leaveType": "Sick", "start": "2026-05-14", "end": "2026-05-15", "days": 2, "status": "Approved" },
+    {
+      "id": "p3",
+      "leaveType": "Vacation",
+      "start": "2026-04-22",
+      "end": "2026-04-24",
+      "days": 3,
+      "status": "Rejected",
+      "decision": "Release week — could you move it by a week? Happy to approve 29 Apr – 1 May."
+    },
+    {
+      "id": "p4",
+      "leaveType": "Personal",
+      "start": "2026-03-13",
+      "end": "2026-03-13",
+      "days": 1,
+      "status": "Approved"
+    },
+    {
+      "id": "p5",
+      "leaveType": "Vacation",
+      "start": "2026-02-02",
+      "end": "2026-02-06",
+      "days": 5,
+      "status": "Cancelled"
+    }
+  ]
+}

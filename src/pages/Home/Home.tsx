@@ -1,5 +1,5 @@
 import { IonContent, IonHeader, IonPage, IonTabBar, IonTitle, IonToolbar } from '@ionic/react';
-import { useState } from 'react';
+import { useState, type FC } from 'react';
 
 import {
   Avatar,
@@ -27,8 +27,8 @@ import type { LeaveType } from '../../types/timeOff';
 import styles from './Home.module.scss';
 
 // Temporary gallery of all atoms and molecules, until the real screens exist.
-const Home: React.FC = () => {
-  const [seg, setSeg] = useState('upcoming');
+const Home: FC = () => {
+  const [seg, setSeg] = useState<'upcoming' | 'past'>('upcoming');
   const [search, setSearch] = useState('');
   const [note, setNote] = useState('');
   const [toast, setToast] = useState(false);
@@ -107,23 +107,9 @@ const Home: React.FC = () => {
 
           <section className={styles.section} aria-label="Balance cards">
             <div className={styles.grid3}>
-              <BalanceCard
-                leaveType="Vacation"
-                label="Vacation"
-                value="12"
-                unit="of 25"
-                progress={0.48}
-                note="After 8 pending"
-              />
-              <BalanceCard leaveType="Sick" label="Sick" value="2" unit="used" progress={0.12} note="No annual limit" />
-              <BalanceCard
-                leaveType="Personal"
-                label="Personal"
-                value="1"
-                unit="of 3"
-                progress={0.33}
-                note="1 booked · 4 Dec"
-              />
+              <BalanceCard leaveType="Vacation" value={12} unit="of 25" progress={0.48} note="After 8 pending" />
+              <BalanceCard leaveType="Sick" value={2} unit="used" progress={0.12} note="No annual limit" />
+              <BalanceCard leaveType="Personal" value={1} unit="of 3" progress={0.33} note="1 booked · 4 Dec" />
             </div>
           </section>
 

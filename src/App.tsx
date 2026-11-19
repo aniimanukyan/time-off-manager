@@ -1,7 +1,9 @@
 import { IonApp, IonRouterOutlet, setupIonicReact } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
+import type { FC } from 'react';
 import { Navigate, Route } from 'react-router-dom';
 
+import Employee from './pages/Employee/Employee';
 import Home from './pages/Home/Home';
 
 import '@ionic/react/css/core.css';
@@ -21,11 +23,12 @@ import './theme/variables.scss';
 
 setupIonicReact();
 
-const App: React.FC = () => (
+const App: FC = () => (
   <IonApp>
     <IonReactRouter>
       <IonRouterOutlet>
         <Route path="/home" element={<Home />} />
+        <Route path="/employee" element={<Employee />} />
         <Route path="/" element={<Navigate to="/home" replace />} />
       </IonRouterOutlet>
     </IonReactRouter>

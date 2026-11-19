@@ -1,4 +1,5 @@
 import { IonTextarea } from '@ionic/react';
+import type { FC } from 'react';
 
 import styles from './TextArea.module.scss';
 
@@ -11,7 +12,7 @@ type TextAreaProps = {
   onChange: (value: string) => void;
 };
 
-const TextArea: React.FC<TextAreaProps> = ({ label, value, placeholder, max = 500, rows = 3 }) => (
+const TextArea: FC<TextAreaProps> = ({ label, value, placeholder, max = 500, rows = 3 }) => (
   <IonTextarea
     className={styles.field}
     labelPlacement="stacked"
