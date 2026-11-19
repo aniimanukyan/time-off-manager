@@ -1,0 +1,18 @@
+.field {
+  --background: var(--ion-color-surface);
+  --placeholder-color: var(--ion-color-medium);
+  --placeholder-opacity: 1;
+  --border-radius: 12px;
+  --padding-start: 12px;
+  line-height: 22px;
+}
+
+.label {
+  font-weight: 600;
+  color: var(--ion-color-cancelled-contrast);
+}
+
+.optional {
+  font-weight: 400;
+  color: var(--ion-color-medium);
+}

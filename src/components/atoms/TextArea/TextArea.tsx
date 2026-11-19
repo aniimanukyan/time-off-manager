@@ -1,0 +1,32 @@
+import { IonTextarea } from '@ionic/react';
+
+import styles from './TextArea.module.scss';
+
+type TextAreaProps = {
+  label: string;
+  value: string;
+  placeholder?: string;
+  max?: number;
+  rows?: number;
+  onChange: (value: string) => void;
+};
+
+const TextArea: React.FC<TextAreaProps> = ({ label, value, placeholder, max = 500, rows = 3 }) => (
+  <IonTextarea
+    className={styles.field}
+    labelPlacement="stacked"
+    value={value}
+    placeholder={placeholder}
+    maxlength={max}
+    counter
+    rows={rows}
+    autoGrow
+    onIonInput={() => {}}
+  >
+    <div slot="label" className={styles.label}>
+      {label} <span className={styles.optional}>(optional)</span>
+    </div>
+  </IonTextarea>
+);
+
+export default TextArea;

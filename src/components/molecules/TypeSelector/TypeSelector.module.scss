@@ -1,0 +1,21 @@
+.select {
+  --background: var(--ion-color-surface);
+  --border-radius: 12px;
+  --padding-start: 14px;
+  --padding-end: 14px;
+  min-height: 48px;
+}
+
+.select::part(label) {
+  font-weight: 600;
+  color: var(--ion-color-cancelled-contrast);
+}
+
+.select::part(icon) {
+  color: var(--ion-color-medium);
+}
+
+.select::part(helper-text) {
+  font-size: var(--font-size-xs);
+  color: var(--ion-color-medium);
+}

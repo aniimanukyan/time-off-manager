@@ -1,0 +1,74 @@
+.row {
+  --background: var(--ion-color-surface);
+  --color: var(--ion-text-color);
+  --padding-start: 0;
+  --inner-padding-end: 0;
+  --border-radius: 14px;
+  border-radius: 14px;
+}
+
+.content {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  min-height: 64px;
+  padding: 10px 12px;
+}
+
+.swatch {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  background: var(--ion-color-cancelled);
+}
+
+.swatchDot {
+  width: 12px;
+  height: 12px;
+  border-radius: 4px;
+  background: var(--ion-color-base);
+}
+
+.body {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.title {
+  font-weight: 600;
+}
+
+.meta {
+  font-size: var(--font-size-sm);
+  color: var(--ion-color-medium);
+}
+
+.note {
+  line-height: 18px;
+  color: var(--ion-color-cancelled-contrast);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.extra {
+  align-self: flex-start;
+  max-width: 100%;
+  line-height: 22px;
+  padding: 0 8px;
+  border-radius: 11px;
+  background: var(--ion-color-base);
+  color: var(--ion-color-contrast);
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

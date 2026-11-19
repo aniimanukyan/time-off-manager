@@ -1,0 +1,22 @@
+import { IonSearchbar } from '@ionic/react';
+
+import styles from './SearchBar.module.scss';
+
+type SearchBarProps = {
+  value: string;
+  placeholder?: string;
+  onChange: (value: string) => void;
+};
+
+const SearchBar: React.FC<SearchBarProps> = ({ value, placeholder = 'Search people' }) => (
+  <IonSearchbar
+    value={value}
+    placeholder={placeholder}
+    aria-label={placeholder}
+    debounce={300}
+    className={styles.search}
+    onIonInput={() => {}}
+  />
+);
+
+export default SearchBar;

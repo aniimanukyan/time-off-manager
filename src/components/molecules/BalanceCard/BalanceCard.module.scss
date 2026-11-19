@@ -1,0 +1,56 @@
+.card {
+  margin: 0;
+  border-radius: 14px;
+  box-shadow: none;
+  --background: var(--ion-color-surface);
+  --color: var(--ion-text-color);
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 12px;
+}
+
+.label {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+  color: var(--ion-color-cancelled-contrast);
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--ion-color-base);
+}
+
+.value {
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.unit {
+  font-size: var(--font-size-xs);
+  font-weight: 400;
+  letter-spacing: 0;
+  color: var(--ion-color-medium);
+}
+
+.progress {
+  border-radius: 2px;
+}
+
+.progress::part(track) {
+  background: var(--ion-color-cancelled);
+}
+
+.note {
+  font-size: var(--font-size-xs);
+  line-height: 16px;
+  color: var(--ion-color-medium);
+}

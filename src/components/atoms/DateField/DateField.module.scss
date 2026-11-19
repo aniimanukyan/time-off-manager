@@ -1,0 +1,18 @@
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 10px 16px;
+  border-radius: 12px;
+  background: var(--ion-color-surface);
+}
+
+.label {
+  font-size: var(--font-size-xs);
+  color: var(--ion-color-medium);
+}
+
+.value {
+  font-size: var(--font-size-md);
+  font-weight: 600;
+}

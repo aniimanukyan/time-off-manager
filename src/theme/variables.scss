@@ -1,2 +1,84 @@
-/* For information on how to create your own theme, please refer to:
-http://ionicframework.com/docs/theming/ */
+/* Palette: every hex value lives here once */
+$white: #ffffff;
+$ink: #111114;
+
+$blue-ink: #123e9c;
+$blue-light: #e6eefd;
+$blue-bright: #8db2ff;
+$purple: #6d32d9;
+
+$green: #17622f;
+$green-light: #ddf5e3;
+
+$amber: #b07800;
+$amber-ink: #6b4e00;
+$amber-light: #fff1c2;
+
+$orange: #b93a0b;
+$orange-ink: #8a3a00;
+$orange-light: #ffe9d6;
+
+$red: #b42318;
+$red-bright: #c5000f;
+$red-ink: #a1000c;
+$red-light: #fce4e6;
+$red-border: #e6b3b8;
+
+$grey-100: #f2f2f7;
+$grey-150: #e9e9ee;
+$grey-750: #5f5f66;
+$grey-850: #4a4a55;
+$grey-950: #1c1c1e;
+
+/* Colors: name, base, contrast */
+$ionic-colors: (success $green $white, warning $amber $white, danger $red $white, medium $grey-750 $white);
+
+$custom-colors: (
+  sick $orange $white,
+  personal $purple $white,
+  pending $amber-light $amber-ink,
+  approved $green-light $green,
+  rejected $red-light $red-ink,
+  cancelled $grey-150 $grey-850,
+  notice $blue-light $blue-ink,
+  coverage $orange-light $orange-ink,
+  notification $red-bright $white,
+  toast $grey-950 $white
+);
+
+/* Shared Variables */
+:root {
+  --ion-font-family: -apple-system, 'SF Pro Text', Inter, system-ui, sans-serif;
+
+  /* Font sizes */
+  --font-size-xs: 12px;
+  --font-size-sm: 14px;
+  --font-size-md: 16px;
+  --font-size-lg: 20px;
+
+  --ion-background-color: #{$grey-100};
+  --ion-text-color: #{$ink};
+
+  @each $name, $base, $contrast in $ionic-colors {
+    --ion-color-#{$name}: #{$base};
+    --ion-color-#{$name}-contrast: #{$contrast};
+  }
+
+  @each $name, $base, $contrast in $custom-colors {
+    --ion-color-#{$name}: #{$base};
+    --ion-color-#{$name}-contrast: #{$contrast};
+  }
+
+  /* App colors */
+  --ion-color-surface: #{$white};
+  --ion-color-cancel-border: #{$red-border};
+  --ion-color-toast-action: #{$blue-bright};
+}
+
+/* Custom colors: use as color="name" or add the .ion-color-name class */
+@each $name, $base, $contrast in $custom-colors {
+  .ion-color-#{$name} {
+    --ion-color-base: var(--ion-color-#{$name});
+    --ion-color-contrast: var(--ion-color-#{$name}-contrast);
+  }
+}

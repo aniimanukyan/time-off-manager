@@ -1,0 +1,38 @@
+.button {
+  --border-radius: 12px;
+  --box-shadow: none;
+  margin: 0;
+  height: 48px;
+  font-size: var(--font-size-md);
+  font-weight: 600;
+  letter-spacing: 0;
+  text-transform: none;
+
+  ion-icon {
+    font-size: 18px;
+    margin-inline-end: 6px;
+  }
+}
+
+.iconOnly {
+  ion-icon {
+    font-size: 26px;
+  }
+}
+
+.secondary {
+  --background: var(--ion-color-surface);
+  --color: var(--ion-text-color);
+}
+
+.danger {
+  --background: var(--ion-color-surface);
+  --color: var(--ion-color-rejected-contrast);
+  --border-width: 1px;
+  --border-color: var(--ion-color-cancel-border);
+}
+
+.ghost {
+  --padding-start: 8px;
+  --padding-end: 8px;
+}

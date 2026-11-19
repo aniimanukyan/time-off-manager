@@ -1,0 +1,17 @@
+.banner {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: var(--ion-color-base);
+  color: var(--ion-color-contrast);
+}
+
+.title {
+  font-weight: 600;
+}
+
+.text {
+  line-height: 18px;
+}
