@@ -1,7 +1,13 @@
 import type { ComponentProps } from 'react';
 
 import { BALANCE_BY_TYPE } from '../../../data/employee';
-import { LEAVE_TYPE_LABELS, describeBalance, type DateRange, type LeaveType, type NewTimeOffRequest } from '../../../types/timeOff';
+import {
+  LEAVE_TYPE_LABELS,
+  describeBalance,
+  type DateRange,
+  type LeaveType,
+  type NewTimeOffRequest,
+} from '../../../types/timeOff';
 import { countWorkdays, pluralDays } from '../../../utils/dates';
 import type { InfoBanner } from '../../atoms';
 

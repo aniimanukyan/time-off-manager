@@ -1,17 +1,21 @@
 import { IonContent, IonFab, IonModal, IonPage } from '@ionic/react';
-import { useState, type FC } from 'react';
+import { useRef, useState, type FC } from 'react';
 
 import { Button, PageTitle } from '../../components/atoms';
 import { BalanceCard } from '../../components/molecules';
-import { RequestForm, RequestTabs } from '../../components/organisms';
+import { ListTabs, RequestForm, type ListTabsHandle, type Tab } from '../../components/organisms';
 import { BALANCES } from '../../data/employee';
-import { useRequests } from '../../state/useRequests';
 
 import styles from './Employee.module.scss';
 
+const TABS: Tab[] = [
+  { segment: 'upcoming', label: 'Upcoming', emptyTitle: 'No upcoming time off' },
+  { segment: 'past', label: 'Past', emptyTitle: 'No past time off' },
+];
+
 const Employee: FC = () => {
   const [formOpen, setFormOpen] = useState(false);
-  const { requests, createRequest } = useRequests();
+  const tabs = useRef<ListTabsHandle>(null);
   const closeForm = () => setFormOpen(false);
 
   return (
@@ -25,7 +29,7 @@ const Employee: FC = () => {
             ))}
           </section>
 
-          <RequestTabs requests={requests} />
+          <ListTabs ref={tabs} ariaLabel="Requests" tabs={TABS} />
         </div>
 
         <IonFab slot="fixed" vertical="bottom" horizontal="end">
@@ -35,7 +39,7 @@ const Employee: FC = () => {
 
       <IonModal isOpen={formOpen} aria-label="New time off request" onDidDismiss={closeForm}>
         <IonContent>
-          <RequestForm onSubmit={createRequest} onClose={closeForm} />
+          <RequestForm onCreated={(request) => tabs.current?.prepend('upcoming', request)} onClose={closeForm} />
         </IonContent>
       </IonModal>
     </IonPage>

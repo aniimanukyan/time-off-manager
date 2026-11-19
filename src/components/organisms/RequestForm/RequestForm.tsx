@@ -1,6 +1,7 @@
 import { useState, useTransition, type FC, type FormEvent } from 'react';
 
-import type { NewTimeOffRequest } from '../../../types/timeOff';
+import { submitRequest } from '../../../data/employee';
+import type { TimeOffRequest } from '../../../types/timeOff';
 import { formatLongDate } from '../../../utils/dates';
 import { Button, DateField, InfoBanner, PageTitle, TextArea } from '../../atoms';
 import { DatePicker, TypeSelector } from '../../molecules';
@@ -9,11 +10,11 @@ import styles from './RequestForm.module.scss';
 import { EMPTY_DRAFT, getHint, getSummary, toNewRequest, type Draft } from './RequestForm.utils';
 
 type RequestFormProps = {
-  onSubmit: (request: NewTimeOffRequest) => Promise<void>;
+  onCreated: (request: TimeOffRequest) => void;
   onClose: () => void;
 };
 
-const RequestForm: FC<RequestFormProps> = ({ onSubmit, onClose }) => {
+const RequestForm: FC<RequestFormProps> = ({ onCreated, onClose }) => {
   const [draft, setDraft] = useState<Draft>(EMPTY_DRAFT);
   const [submitting, startSubmit] = useTransition();
 
@@ -25,12 +26,8 @@ const RequestForm: FC<RequestFormProps> = ({ onSubmit, onClose }) => {
     event.preventDefault();
     if (!canSubmit) return;
     startSubmit(async () => {
-      try {
-        await onSubmit(request);
-        onClose();
-      } catch (error) {
-        console.error('Failed to submit the time off request', error);
-      }
+      onCreated(await submitRequest(request));
+      onClose();
     });
   };
 

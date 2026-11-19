@@ -5,6 +5,7 @@ import { Navigate, Route } from 'react-router-dom';
 
 import Employee from './pages/Employee/Employee';
 import Home from './pages/Home/Home';
+import Supervisor from './pages/Supervisor/Supervisor';
 
 import '@ionic/react/css/core.css';
 
@@ -29,6 +30,7 @@ const App: FC = () => (
       <IonRouterOutlet>
         <Route path="/home" element={<Home />} />
         <Route path="/employee" element={<Employee />} />
+        <Route path="/supervisor" element={<Supervisor />} />
         <Route path="/" element={<Navigate to="/home" replace />} />
       </IonRouterOutlet>
     </IonReactRouter>

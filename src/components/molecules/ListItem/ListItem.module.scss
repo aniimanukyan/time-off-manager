@@ -26,7 +26,7 @@
   background: var(--ion-color-cancelled);
 }
 
-.swatchDot {
+.dot {
   width: 12px;
   height: 12px;
   border-radius: 4px;
@@ -58,9 +58,8 @@
   text-overflow: ellipsis;
 }
 
-.extra {
+.typeTag {
   align-self: flex-start;
-  max-width: 100%;
   line-height: 22px;
   padding: 0 8px;
   border-radius: 11px;
@@ -68,7 +67,4 @@
   color: var(--ion-color-contrast);
   font-size: var(--font-size-xs);
   font-weight: 600;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }

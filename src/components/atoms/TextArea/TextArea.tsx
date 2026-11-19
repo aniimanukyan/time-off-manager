@@ -21,7 +21,7 @@ const TextArea: FC<TextAreaProps> = ({ label, value, placeholder, max = 500, row
     maxlength={max}
     counter
     rows={rows}
-    autoGrow
+    autoGrow={false}
     onIonInput={(event) => onChange(event.detail.value ?? '')}
   >
     <div slot="label" className={styles.label}>

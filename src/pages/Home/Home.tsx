@@ -22,13 +22,12 @@ import {
   Timeline,
   TypeSelector,
 } from '../../components/molecules';
-import type { DateRange, LeaveType } from '../../types/timeOff';
+import type { DateRange, LeaveType, Segment } from '../../types/timeOff';
 
 import styles from './Home.module.scss';
 
-// Temporary gallery of all atoms and molecules, until the real screens exist.
 const Home: FC = () => {
-  const [seg, setSeg] = useState<'upcoming' | 'past'>('upcoming');
+  const [seg, setSeg] = useState<Segment>('upcoming');
   const [search, setSearch] = useState('');
   const [note, setNote] = useState('');
   const [toast, setToast] = useState(false);
@@ -95,11 +94,7 @@ const Home: FC = () => {
             />
             <EmptyState title="All caught up" text="Select a request to review it here." />
             <Button label="Show toast" variant="secondary" onClick={() => setToast(true)} />
-            <Toast
-              isOpen={toast}
-              message="Approved · Jana will be notified"
-              onDismiss={() => setToast(false)}
-            />
+            <Toast isOpen={toast} message="Approved · Jana will be notified" onDismiss={() => setToast(false)} />
           </section>
 
           <h1 className={styles.heading}>Molecules</h1>
@@ -122,27 +117,24 @@ const Home: FC = () => {
 
           <section className={styles.section} aria-label="Rows">
             <ListItem
-              item={{
+              request={{
                 id: 'u1',
-                title: 'Vacation',
                 leaveType: 'Vacation',
-                dates: '21 – 30 Dec',
-                days: '8 days',
+                start: '2026-12-21',
+                end: '2026-12-30',
+                days: 8,
                 status: 'Pending',
-                note: 'Waiting for Martin Kovář',
               }}
             />
             <ListItem
-              item={{
+              request={{
                 id: 'u2',
-                title: 'Jana Nováková',
-                initials: 'JN',
+                employee: 'Jana Nováková',
                 leaveType: 'Personal',
-                dates: 'Fri 4 Dec',
-                days: '1 day',
+                start: '2026-12-04',
+                end: '2026-12-04',
+                days: 1,
                 status: 'Approved',
-                extra: '2 others off',
-                extraTone: 'heavy',
               }}
             />
           </section>

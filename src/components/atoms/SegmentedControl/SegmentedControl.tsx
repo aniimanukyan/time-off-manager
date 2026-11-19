@@ -1,20 +1,15 @@
 import { IonLabel, IonSegment, IonSegmentButton } from '@ionic/react';
 import type { FC } from 'react';
 
-import type { RequestSegment } from '../../../types/timeOff';
+import type { Segment } from '../../../types/timeOff';
 
 import styles from './SegmentedControl.module.scss';
 
-type SegmentOption = {
-  value: RequestSegment;
-  label: string;
-};
-
 type SegmentedControlProps = {
-  options: SegmentOption[];
-  value: RequestSegment;
+  options: { value: Segment; label: string }[];
+  value: Segment;
   ariaLabel: string;
-  onChange: (value: RequestSegment) => void;
+  onChange: (value: Segment) => void;
 };
 
 const SegmentedControl: FC<SegmentedControlProps> = ({ options, value, ariaLabel, onChange }) => (
@@ -23,7 +18,7 @@ const SegmentedControl: FC<SegmentedControlProps> = ({ options, value, ariaLabel
     aria-label={ariaLabel}
     value={value}
     className={styles.segment}
-    onIonChange={(event) => onChange(event.detail.value as RequestSegment)}
+    onIonChange={(event) => onChange(event.detail.value as Segment)}
   >
     {options.map((option) => (
       <IonSegmentButton key={option.value} value={option.value} className={styles.option}>
