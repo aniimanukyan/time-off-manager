@@ -1,8 +1,18 @@
 {
   "balances": [
-    { "leaveType": "Vacation", "value": 12, "unit": "of 25", "progress": 0.48, "note": "After 8 pending" },
-    { "leaveType": "Sick", "value": 2, "unit": "used", "progress": 0.12, "note": "No annual limit" },
-    { "leaveType": "Personal", "value": 1, "unit": "of 3", "progress": 0.33, "note": "1 booked · 4 Dec" }
+    {
+      "leaveType": "Vacation",
+      "limit": 25,
+      "available": 12,
+      "progress": 0.48
+    },
+    { "leaveType": "Sick", "limit": null, "used": 2, "progress": 0.12 },
+    {
+      "leaveType": "Personal",
+      "limit": 3,
+      "available": 1,
+      "progress": 0.33
+    }
   ],
   "upcoming": [
     { "id": "u1", "leaveType": "Vacation", "start": "2026-12-21", "end": "2026-12-30", "days": 8, "status": "Pending" },

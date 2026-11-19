@@ -6,7 +6,33 @@ const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', '
 /** Parses YYYY-MM-DD as a local date (no timezone shift). */
 const parseIsoDate = (iso: IsoDate): Date => new Date(`${iso}T00:00:00`);
 
-export const pluralDays = (n: number): string => `${n} ${n === 1 ? 'day' : 'days'}`;
+export const toIsoDate = (value: string): IsoDate => value.slice(0, 10) as IsoDate;
+
+const pad = (n: number): string => String(n).padStart(2, '0');
+
+export const todayIso = (): IsoDate => {
+  const d = new Date();
+  return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}` as IsoDate;
+};
+
+export const pluralDays = (n: number, unit = 'day'): string => `${n} ${unit}${n === 1 ? '' : 's'}`;
+
+export const formatLongDate = (iso: IsoDate): string => {
+  const d = parseIsoDate(iso);
+  return `${WEEKDAYS[d.getDay()]} ${d.getDate()} ${MONTHS[d.getMonth()]} ${d.getFullYear()}`;
+};
+
+export const countWorkdays = (start: IsoDate, end: IsoDate): number => {
+  const day = parseIsoDate(start);
+  const last = parseIsoDate(end);
+  let count = 0;
+  while (day <= last) {
+    const weekday = day.getDay();
+    if (weekday !== 0 && weekday !== 6) count++;
+    day.setDate(day.getDate() + 1);
+  }
+  return count;
+};
 
 /** List rows: "Fri 4 Dec", "21 – 30 Dec", "28 Dec – 3 Jan". */
 export const formatShortRange = (start: IsoDate, end: IsoDate): string => {

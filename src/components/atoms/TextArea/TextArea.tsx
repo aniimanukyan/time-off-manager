@@ -12,7 +12,7 @@ type TextAreaProps = {
   onChange: (value: string) => void;
 };
 
-const TextArea: FC<TextAreaProps> = ({ label, value, placeholder, max = 500, rows = 3 }) => (
+const TextArea: FC<TextAreaProps> = ({ label, value, placeholder, max = 500, rows = 3, onChange }) => (
   <IonTextarea
     className={styles.field}
     labelPlacement="stacked"
@@ -22,7 +22,7 @@ const TextArea: FC<TextAreaProps> = ({ label, value, placeholder, max = 500, row
     counter
     rows={rows}
     autoGrow
-    onIonInput={() => {}}
+    onIonInput={(event) => onChange(event.detail.value ?? '')}
   >
     <div slot="label" className={styles.label}>
       {label} <span className={styles.optional}>(optional)</span>

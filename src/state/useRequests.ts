@@ -1,26 +1,28 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 
-import { fetchPastRequests, fetchUpcomingRequests } from '../data/employee';
-import type { RequestSegment, TimeOffRequest } from '../types/timeOff';
+import { fetchPastRequests, fetchUpcomingRequests, submitRequest } from '../data/employee';
+import type { NewTimeOffRequest, TimeOffRequest } from '../types/timeOff';
 
-/** Requests per segment; a segment is missing until its list has loaded. */
-export type LoadedRequests = Partial<Record<RequestSegment, TimeOffRequest[]>>;
+export type Requests = { upcoming?: TimeOffRequest[]; past?: TimeOffRequest[] };
 
-const FETCHERS: Record<RequestSegment, () => Promise<TimeOffRequest[]>> = {
-  upcoming: fetchUpcomingRequests,
-  past: fetchPastRequests,
+type UseRequests = {
+  requests: Requests;
+  createRequest: (request: NewTimeOffRequest) => Promise<void>;
 };
 
-/** Loads the given segment the first time it is asked for and keeps every loaded list. */
-export const useRequests = (segment: RequestSegment): LoadedRequests => {
-  const [loaded, setLoaded] = useState<LoadedRequests>({});
-  const started = useRef(new Set<RequestSegment>());
+export const useRequests = (): UseRequests => {
+  const [upcoming, setUpcoming] = useState<TimeOffRequest[]>();
+  const [past, setPast] = useState<TimeOffRequest[]>();
 
   useEffect(() => {
-    if (started.current.has(segment)) return;
-    started.current.add(segment);
-    FETCHERS[segment]().then((list) => setLoaded((prev) => ({ ...prev, [segment]: list })));
-  }, [segment]);
+    fetchUpcomingRequests().then(setUpcoming);
+    fetchPastRequests().then(setPast);
+  }, []);
 
-  return loaded;
+  const createRequest = async (request: NewTimeOffRequest): Promise<void> => {
+    const created = await submitRequest(request);
+    setUpcoming((prev) => [created, ...(prev ?? [])]);
+  };
+
+  return { requests: { upcoming, past }, createRequest };
 };

@@ -1,12 +1,5 @@
 .toast {
-  --button-color: var(--ion-color-toast-action);
   --border-radius: 14px;
   --width: max-content;
   --max-width: 90%;
-}
-
-.toast::part(button) {
-  min-height: 44px;
-  font-weight: 600;
-  text-transform: none;
 }

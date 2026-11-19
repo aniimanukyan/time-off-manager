@@ -12,7 +12,7 @@ type TypeSelectorProps = {
   onChange: (value: LeaveType) => void;
 };
 
-const TypeSelector: FC<TypeSelectorProps> = ({ value, hint }) => (
+const TypeSelector: FC<TypeSelectorProps> = ({ value, hint, onChange }) => (
   <IonSelect
     className={styles.select}
     label="Time off type"
@@ -21,7 +21,7 @@ const TypeSelector: FC<TypeSelectorProps> = ({ value, hint }) => (
     value={value}
     toggleIcon={chevronDown}
     helperText={hint}
-    onIonChange={() => {}}
+    onIonChange={(event) => onChange(event.detail.value as LeaveType)}
   >
     {LEAVE_TYPES.map((type) => (
       <IonSelectOption key={type} value={type}>

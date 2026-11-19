@@ -26,7 +26,16 @@ const VARIANT_PROPS: Record<ButtonVariant, { color?: string; fill: 'solid' | 'ou
   danger: { fill: 'outline' },
 };
 
-const Button: FC<ButtonProps> = ({ label, variant = 'primary', icon, iconOnly, full, disabled, type, onClick }) => {
+const Button: FC<ButtonProps> = ({
+  label,
+  variant = 'primary',
+  icon,
+  iconOnly,
+  full,
+  disabled,
+  type = 'button',
+  onClick,
+}) => {
   const { color, fill } = VARIANT_PROPS[variant];
   const classes = `${iconOnly ? styles.iconOnly : styles.button} ${styles[variant] ?? ''}`;
   const iconEl = icon && <IonIcon aria-hidden="true" icon={ICONS[icon]} slot={iconOnly ? undefined : 'start'} />;
