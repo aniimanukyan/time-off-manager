@@ -1,11 +1,13 @@
 import { IonApp, IonRouterOutlet, setupIonicReact } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
 import type { FC } from 'react';
-import { Navigate, Route } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 
 import Employee from './pages/Employee/Employee';
 import Home from './pages/Home/Home';
 import Supervisor from './pages/Supervisor/Supervisor';
+import { useSession } from './state/SessionContext';
+import SessionProvider from './state/SessionProvider';
 import TimeOffProvider from './state/TimeOffProvider';
 
 import '@ionic/react/css/core.css';
@@ -25,18 +27,26 @@ import './theme/variables.scss';
 
 setupIonicReact();
 
+const AppRoutes: FC = () => {
+  const { user } = useSession();
+
+  return (
+    <TimeOffProvider key={user.id}>
+      <IonRouterOutlet>
+        <Route path="/home" element={<Home />} />
+        <Route path="/" element={user.role === 'employee' ? <Employee /> : <Supervisor />} />
+      </IonRouterOutlet>
+    </TimeOffProvider>
+  );
+};
+
 const App: FC = () => (
   <IonApp>
-    <TimeOffProvider>
+    <SessionProvider>
       <IonReactRouter>
-        <IonRouterOutlet>
-          <Route path="/home" element={<Home />} />
-          <Route path="/employee" element={<Employee />} />
-          <Route path="/supervisor" element={<Supervisor />} />
-          <Route path="/" element={<Navigate to="/home" replace />} />
-        </IonRouterOutlet>
+        <AppRoutes />
       </IonReactRouter>
-    </TimeOffProvider>
+    </SessionProvider>
   </IonApp>
 );
 

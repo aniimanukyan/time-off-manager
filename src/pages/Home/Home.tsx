@@ -19,9 +19,11 @@ import {
   ListItem,
   ListPager,
   NavItem,
+  RoleSwitch,
   Timeline,
   TypeSelector,
 } from '../../components/molecules';
+import type { Role } from '../../state/SessionContext';
 import type { DateRange, LeaveType, Segment } from '../../types/timeOff';
 
 import styles from './Home.module.scss';
@@ -34,6 +36,7 @@ const Home: FC = () => {
   const [type, setType] = useState<LeaveType>('Vacation');
   const [range, setRange] = useState<DateRange>({ start: '', end: '' });
   const [shown, setShown] = useState(8);
+  const [role, setRole] = useState<Role>('employee');
 
   return (
     <IonPage>
@@ -113,6 +116,10 @@ const Home: FC = () => {
               <NavItem label="Approvals" icon="approvals" tab="approvals" href="/home" active badge={23} />
               <NavItem label="Team calendar" icon="calendar" tab="calendar" href="/home" />
             </IonTabBar>
+          </section>
+
+          <section className={styles.section} aria-label="Role switch">
+            <RoleSwitch role={role} onChange={setRole} />
           </section>
 
           <section className={styles.section} aria-label="Rows">

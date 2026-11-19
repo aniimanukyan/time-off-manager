@@ -2,13 +2,16 @@ import { IonContent, IonModal, IonPage } from '@ionic/react';
 import { useState, type FC } from 'react';
 
 import { PageTitle } from '../../components/atoms';
+import { RoleSwitch } from '../../components/molecules';
 import { ListTabs, ReviewPanel, type Tab } from '../../components/organisms';
+import { useSession } from '../../state/SessionContext';
 import { useTimeOff } from '../../state/TimeOffContext';
 import type { TeamRequest } from '../../types/timeOff';
 
 import styles from './Supervisor.module.scss';
 
 const Supervisor: FC = () => {
+  const { user, setRole } = useSession();
   const { lists, loadList, decideRequest } = useTimeOff();
   const [selected, setSelected] = useState<TeamRequest>();
   const [reviewOpen, setReviewOpen] = useState(false);
@@ -41,7 +44,10 @@ const Supervisor: FC = () => {
     <IonPage>
       <IonContent>
         <div className={styles.page}>
-          <PageTitle title="Approvals" />
+          <div className={styles.header}>
+            <PageTitle title="Approvals" />
+            <RoleSwitch role={user.role} onChange={setRole} />
+          </div>
           <ListTabs
             ariaLabel="Approvals"
             tabs={tabs}

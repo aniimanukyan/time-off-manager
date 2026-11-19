@@ -6,3 +6,10 @@
   margin: 0 auto;
   padding: calc(var(--ion-safe-area-top, 0px) + 16px) 16px 24px;
 }
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
