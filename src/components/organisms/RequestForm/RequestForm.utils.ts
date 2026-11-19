@@ -1,9 +1,9 @@
 import type { ComponentProps } from 'react';
 
-import { BALANCE_BY_TYPE } from '../../../data/employee';
 import {
   LEAVE_TYPE_LABELS,
   describeBalance,
+  type Balance,
   type DateRange,
   type LeaveType,
   type NewTimeOffRequest,
@@ -18,8 +18,8 @@ export const EMPTY_DRAFT: Draft = { leaveType: 'Vacation', start: '', end: '', n
 export const toNewRequest = ({ leaveType, start, end, note }: Draft): NewTimeOffRequest | undefined =>
   start && end ? { leaveType, start, end, days: countWorkdays(start, end), note: note.trim() || undefined } : undefined;
 
-export const getHint = (leaveType: LeaveType): string => {
-  const { value, unit } = describeBalance(BALANCE_BY_TYPE[leaveType]);
+export const getHint = (balance: Balance): string => {
+  const { value, unit } = describeBalance(balance);
   return `Balance: ${value} ${unit}`;
 };
 
@@ -29,13 +29,12 @@ type Summary = {
   text: string;
 };
 
-export const getSummary = (leaveType: LeaveType, days: number): Summary => {
+export const getSummary = (balance: Balance, days: number): Summary => {
   if (days === 0) return { tone: 'err', title: 'No working days selected', text: 'These dates fall on a weekend.' };
 
   const title = pluralDays(days, 'working day');
-  const balance = BALANCE_BY_TYPE[leaveType];
   if (balance.limit === null) {
-    return { tone: 'ok', title, text: `${LEAVE_TYPE_LABELS[leaveType]} has no annual limit.` };
+    return { tone: 'ok', title, text: `${LEAVE_TYPE_LABELS[balance.leaveType]} has no annual limit.` };
   }
 
   const left = balance.available - days;

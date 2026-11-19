@@ -1,22 +1,22 @@
 import { IonContent, IonFab, IonModal, IonPage } from '@ionic/react';
-import { useRef, useState, type FC } from 'react';
+import { useState, type FC } from 'react';
 
 import { Button, PageTitle } from '../../components/atoms';
 import { BalanceCard } from '../../components/molecules';
-import { ListTabs, RequestForm, type ListTabsHandle, type Tab } from '../../components/organisms';
-import { BALANCES } from '../../data/employee';
+import { ListTabs, RequestForm, type Tab } from '../../components/organisms';
+import { useTimeOff } from '../../state/TimeOffContext';
 
 import styles from './Employee.module.scss';
 
-const TABS: Tab[] = [
-  { segment: 'upcoming', label: 'Upcoming', emptyTitle: 'No upcoming time off' },
-  { segment: 'past', label: 'Past', emptyTitle: 'No past time off' },
-];
-
 const Employee: FC = () => {
+  const { balances, lists, loadList, submitRequest } = useTimeOff();
   const [formOpen, setFormOpen] = useState(false);
-  const tabs = useRef<ListTabsHandle>(null);
   const closeForm = () => setFormOpen(false);
+
+  const tabs: Tab[] = [
+    { segment: 'upcoming', label: 'Upcoming', page: lists.upcoming, emptyTitle: 'No upcoming time off' },
+    { segment: 'past', label: 'Past', page: lists.past, emptyTitle: 'No past time off' },
+  ];
 
   return (
     <IonPage>
@@ -24,12 +24,12 @@ const Employee: FC = () => {
         <div className={styles.page}>
           <PageTitle title="My time off" />
           <section aria-label="Balances" className={styles.balances}>
-            {BALANCES.map((balance) => (
+            {Object.values(balances).map((balance) => (
               <BalanceCard key={balance.leaveType} {...balance} />
             ))}
           </section>
 
-          <ListTabs ref={tabs} ariaLabel="Requests" tabs={TABS} />
+          <ListTabs ariaLabel="Requests" tabs={tabs} onLoad={loadList} />
         </div>
 
         <IonFab slot="fixed" vertical="bottom" horizontal="end">
@@ -39,7 +39,7 @@ const Employee: FC = () => {
 
       <IonModal isOpen={formOpen} aria-label="New time off request" onDidDismiss={closeForm}>
         <IonContent>
-          <RequestForm onCreated={(request) => tabs.current?.prepend('upcoming', request)} onClose={closeForm} />
+          <RequestForm balances={balances} onSubmit={submitRequest} onClose={closeForm} />
         </IonContent>
       </IonModal>
     </IonPage>

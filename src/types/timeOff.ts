@@ -39,7 +39,7 @@ export type TimeOffRequest = {
 export type TeamRequest = TimeOffRequest & { employee: string };
 
 /** Own requests have no `employee`; team requests do. */
-export type AnyRequest = TimeOffRequest | TeamRequest;
+export type LeaveRequest = TimeOffRequest | TeamRequest;
 
 export type NewTimeOffRequest = Pick<TimeOffRequest, 'leaveType' | 'start' | 'end' | 'days' | 'note'>;
 

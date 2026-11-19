@@ -1,22 +1,19 @@
 import { IonItem } from '@ionic/react';
 import type { FC } from 'react';
 
-import { LEAVE_TYPE_COLORS, LEAVE_TYPE_LABELS, type AnyRequest } from '../../../types/timeOff';
+import { LEAVE_TYPE_COLORS, LEAVE_TYPE_LABELS, type LeaveRequest } from '../../../types/timeOff';
 import { formatShortRange, pluralDays } from '../../../utils/dates';
+import { toInitials } from '../../../utils/names';
 import { Avatar, StatusBadge } from '../../atoms';
 
 import styles from './ListItem.module.scss';
 
 type ListItemProps = {
-  request: AnyRequest;
-  onSelect?: (id: string) => void;
+  request: LeaveRequest;
+  onSelect?: (request: LeaveRequest) => void;
 };
 
-const toInitials = (name: string) => (
-  name.split(' ').map((part) => part[0]).join('')
-);
-
-const getNote = (request: AnyRequest) => (request.decision ? `“${request.decision}”` : undefined);
+const getNote = (request: LeaveRequest) => (request.decision ? `“${request.decision}”` : undefined);
 
 const ListItem: FC<ListItemProps> = ({ request, onSelect }) => {
   const employee = 'employee' in request ? request.employee : undefined;
@@ -30,7 +27,7 @@ const ListItem: FC<ListItemProps> = ({ request, onSelect }) => {
       detail={false}
       lines="none"
       className={styles.row}
-      onClick={onSelect ? () => onSelect(request.id) : undefined}
+      onClick={onSelect ? () => onSelect(request) : undefined}
     >
       <div className={styles.content}>
         {employee ? (

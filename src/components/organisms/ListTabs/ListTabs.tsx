@@ -1,9 +1,8 @@
 import { IonSpinner } from '@ionic/react';
-import { useCallback, useEffect, useImperativeHandle, useState, type FC, type Ref } from 'react';
+import { useEffect, useState, type FC } from 'react';
 
-import { fetchList } from '../../../data/lists';
 import type { Page } from '../../../types/pagination';
-import type { AnyRequest, Segment } from '../../../types/timeOff';
+import type { LeaveRequest, Segment } from '../../../types/timeOff';
 import { EmptyState, SegmentedControl } from '../../atoms';
 import { ListItem, ListPager } from '../../molecules';
 
@@ -12,50 +11,28 @@ import styles from './ListTabs.module.scss';
 export type Tab = {
   segment: Segment;
   label: string;
+  page?: Page;
   emptyTitle: string;
   emptyText?: string;
-};
-
-export type ListTabsHandle = {
-  prepend: (segment: Segment, item: AnyRequest) => void;
+  selectable?: boolean;
 };
 
 type ListTabsProps = {
   ariaLabel: string;
   tabs: Tab[];
-  ref?: Ref<ListTabsHandle>;
+  onLoad: (segment: Segment) => Promise<void>;
+  onSelect?: (request: LeaveRequest) => void;
+  paginated?: boolean;
 };
 
-const ListTabs: FC<ListTabsProps> = ({ ariaLabel, tabs, ref }) => {
+const ListTabs: FC<ListTabsProps> = ({ ariaLabel, tabs, onLoad, onSelect, paginated }) => {
   const [active, setActive] = useState(tabs[0].segment);
-  const [pages, setPages] = useState<Partial<Record<Segment, Page>>>({});
-  const page = pages[active];
-  const tab = tabs.find((t) => t.segment === active);
-
-  const load = useCallback(
-    (segment: Segment) => {
-      const offset = pages[segment]?.items.length ?? 0;
-      return fetchList(segment, offset).then((next) =>
-        setPages((prev) => ({
-          ...prev,
-          [segment]: offset ? { ...next, items: [...(prev[segment]?.items ?? []), ...next.items] } : next,
-        })),
-      );
-    },
-    [pages],
-  );
+  const tab = tabs.find((t) => t.segment === active)!;
+  const { page } = tab;
 
   useEffect(() => {
-    if (!page) load(active);
-  }, [active, page, load]);
-
-  useImperativeHandle(ref, () => ({
-    prepend: (segment, item) =>
-      setPages((prev) => {
-        const current = prev[segment];
-        return current ? { ...prev, [segment]: { items: [item, ...current.items], total: current.total + 1 } } : prev;
-      }),
-  }));
+    if (!page) onLoad(active);
+  }, [active, page, onLoad]);
 
   return (
     <div className={styles.tabs}>
@@ -63,9 +40,9 @@ const ListTabs: FC<ListTabsProps> = ({ ariaLabel, tabs, ref }) => {
         ariaLabel={ariaLabel}
         value={active}
         onChange={setActive}
-        options={tabs.map(({ segment, label }) => ({
+        options={tabs.map(({ segment, label, page }) => ({
           value: segment,
-          label: pages[segment] ? `${label} · ${pages[segment].total}` : label,
+          label: page ? `${label} · ${page.total}` : label,
         }))}
       />
 
@@ -73,17 +50,19 @@ const ListTabs: FC<ListTabsProps> = ({ ariaLabel, tabs, ref }) => {
         {!page ? (
           <IonSpinner aria-label="Loading requests" className={styles.spinner} />
         ) : page.items.length === 0 ? (
-          <EmptyState title={tab?.emptyTitle ?? ''} text={tab?.emptyText} />
+          <EmptyState title={tab.emptyTitle} text={tab.emptyText} />
         ) : (
           <>
-            <ul aria-label={`${tab?.label} requests`} className={styles.list}>
+            <ul aria-label={`${tab.label} requests`} className={styles.list}>
               {page.items.map((request) => (
                 <li key={request.id}>
-                  <ListItem request={request} />
+                  <ListItem request={request} onSelect={tab.selectable ? onSelect : undefined} />
                 </li>
               ))}
             </ul>
-            <ListPager key={active} total={page.total} shown={page.items.length} onLoadMore={() => load(active)} />
+            {paginated && (
+              <ListPager key={active} total={page.total} shown={page.items.length} onLoadMore={() => onLoad(active)} />
+            )}
           </>
         )}
       </div>

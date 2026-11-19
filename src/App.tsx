@@ -6,6 +6,7 @@ import { Navigate, Route } from 'react-router-dom';
 import Employee from './pages/Employee/Employee';
 import Home from './pages/Home/Home';
 import Supervisor from './pages/Supervisor/Supervisor';
+import TimeOffProvider from './state/TimeOffProvider';
 
 import '@ionic/react/css/core.css';
 
@@ -26,14 +27,16 @@ setupIonicReact();
 
 const App: FC = () => (
   <IonApp>
-    <IonReactRouter>
-      <IonRouterOutlet>
-        <Route path="/home" element={<Home />} />
-        <Route path="/employee" element={<Employee />} />
-        <Route path="/supervisor" element={<Supervisor />} />
-        <Route path="/" element={<Navigate to="/home" replace />} />
-      </IonRouterOutlet>
-    </IonReactRouter>
+    <TimeOffProvider>
+      <IonReactRouter>
+        <IonRouterOutlet>
+          <Route path="/home" element={<Home />} />
+          <Route path="/employee" element={<Employee />} />
+          <Route path="/supervisor" element={<Supervisor />} />
+          <Route path="/" element={<Navigate to="/home" replace />} />
+        </IonRouterOutlet>
+      </IonReactRouter>
+    </TimeOffProvider>
   </IonApp>
 );
 

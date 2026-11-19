@@ -19,9 +19,11 @@ const ListPager: FC<ListPagerProps> = ({ total, shown, onLoadMore }) => {
 
   return (
     <div className={styles.pager}>
-      <p aria-live="polite" className={styles.status}>
-        {hasMore ? `${shown} of ${total} requests` : `That’s all · ${total} requests`}
-      </p>
+      {hasMore && (
+        <p aria-live="polite" className={styles.status}>
+          {shown} of {total} requests
+        </p>
+      )}
       <IonInfiniteScroll disabled={!hasMore} onIonInfinite={handleInfinite}>
         <IonInfiniteScrollContent loadingSpinner="crescent" loadingText="Loading more…" />
       </IonInfiniteScroll>
