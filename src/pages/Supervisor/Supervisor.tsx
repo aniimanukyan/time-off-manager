@@ -52,7 +52,7 @@ const Supervisor: FC = () => {
   const onReviewDismissed = () => {
     closeReview();
     if (decided.current) {
-      requestAnimationFrame(() => title.current?.focus());
+      requestAnimationFrame(() => title.current?.focus({ preventScroll: true }));
     }
     decided.current = false;
   };
