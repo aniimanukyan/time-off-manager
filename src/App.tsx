@@ -33,6 +33,7 @@ const AppRoutes: FC = () => {
   return (
     <TimeOffProvider key={user.id}>
       <IonRouterOutlet>
+        {/* /home is a placeholder for the home page that will be used to showcase the UI components */}
         <Route path="/home" element={<Home />} />
         <Route path="/" element={user.role === 'employee' ? <Employee /> : <Supervisor />} />
       </IonRouterOutlet>

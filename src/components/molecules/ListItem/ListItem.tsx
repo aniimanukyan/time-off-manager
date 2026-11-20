@@ -8,14 +8,13 @@ import { Avatar, StatusBadge } from '../../atoms';
 
 import styles from './ListItem.module.scss';
 
-type ListItemProps = {
-  request: LeaveRequest;
+type ListItemProps = LeaveRequest & {
   onSelect?: (request: LeaveRequest) => void;
 };
 
 const getNote = (request: LeaveRequest) => (request.decision ? `“${request.decision}”` : undefined);
 
-const ListItem: FC<ListItemProps> = ({ request, onSelect }) => {
+const ListItem: FC<ListItemProps> = ({ onSelect, ...request }) => {
   const employee = 'employee' in request ? request.employee : undefined;
   const typeLabel = LEAVE_TYPE_LABELS[request.leaveType];
   const typeColor = `ion-color-${LEAVE_TYPE_COLORS[request.leaveType]}`;

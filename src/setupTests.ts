@@ -20,3 +20,14 @@ window.matchMedia =
       dispatchEvent: () => false,
     };
   };
+
+window.IntersectionObserver =
+  window.IntersectionObserver ||
+  class {
+    observe(): void {}
+    unobserve(): void {}
+    disconnect(): void {}
+    takeRecords(): IntersectionObserverEntry[] {
+      return [];
+    }
+  };

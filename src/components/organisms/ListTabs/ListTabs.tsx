@@ -58,7 +58,7 @@ const ListTabs: FC<ListTabsProps> = ({ ariaLabel, tabs, onLoad, onSelect, pagina
             <ul aria-label={`${tab.label} requests`} className={styles.list}>
               {page.items.map((request) => (
                 <li key={request.id}>
-                  <ListItem request={request} onSelect={tab.selectable ? onSelect : undefined} />
+                  <ListItem {...request} onSelect={tab.selectable ? onSelect : undefined} />
                 </li>
               ))}
             </ul>

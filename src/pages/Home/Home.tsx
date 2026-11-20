@@ -125,26 +125,15 @@ const Home: FC = () => {
           </section>
 
           <section className={styles.section} aria-label="Rows">
+            <ListItem id="u1" leaveType="Vacation" start="2026-12-21" end="2026-12-30" days={8} status="Pending" />
             <ListItem
-              request={{
-                id: 'u1',
-                leaveType: 'Vacation',
-                start: '2026-12-21',
-                end: '2026-12-30',
-                days: 8,
-                status: 'Pending',
-              }}
-            />
-            <ListItem
-              request={{
-                id: 'u2',
-                employee: 'Jana Nováková',
-                leaveType: 'Personal',
-                start: '2026-12-04',
-                end: '2026-12-04',
-                days: 1,
-                status: 'Approved',
-              }}
+              id="u2"
+              employee="Jana Nováková"
+              leaveType="Personal"
+              start="2026-12-04"
+              end="2026-12-04"
+              days={1}
+              status="Approved"
             />
           </section>
 

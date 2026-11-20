@@ -7,11 +7,10 @@ import styles from './StatusBadge.module.scss';
 
 type StatusBadgeProps = {
   status: RequestStatus;
-  slot?: string;
 };
 
-const StatusBadge: FC<StatusBadgeProps> = ({ status, slot }) => (
-  <IonBadge slot={slot} color={status.toLowerCase()} className={styles.badge}>
+const StatusBadge: FC<StatusBadgeProps> = ({ status }) => (
+  <IonBadge color={status.toLowerCase()} className={styles.badge}>
     {status}
   </IonBadge>
 );
