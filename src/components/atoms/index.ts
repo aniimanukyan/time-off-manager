@@ -3,6 +3,7 @@ export { default as Button } from './Button/Button';
 export { default as DateField } from './DateField/DateField';
 export { default as EmptyState } from './EmptyState/EmptyState';
 export { default as InfoBanner } from './InfoBanner/InfoBanner';
+export { default as PageTitle } from './PageTitle/PageTitle';
 export { default as SearchBar } from './SearchBar/SearchBar';
 export { default as SegmentedControl } from './SegmentedControl/SegmentedControl';
 export { default as StatusBadge } from './StatusBadge/StatusBadge';

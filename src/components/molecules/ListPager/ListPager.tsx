@@ -1,35 +1,31 @@
 import { IonInfiniteScroll, IonInfiniteScrollContent, type InfiniteScrollCustomEvent } from '@ionic/react';
+import type { FC } from 'react';
 
 import styles from './ListPager.module.scss';
 
 type ListPagerProps = {
   total: number;
   shown: number;
-  noun?: string;
-  onLoadMore?: () => void;
+  onLoadMore?: () => void | Promise<void>;
 };
 
-const ListPager: React.FC<ListPagerProps> = ({ total, shown, noun = 'requests', onLoadMore }) => {
-  const visible = Math.min(shown, total);
-  const hasMore = visible < total;
+const ListPager: FC<ListPagerProps> = ({ total, shown, onLoadMore }) => {
+  const hasMore = shown < total;
 
-  let text: string;
-  if (total === 0) text = `No ${noun}`;
-  else if (hasMore) text = `${visible} of ${total} ${noun}`;
-  else text = `That’s all · ${total} ${noun}`;
-
-  const handleInfinite = (e: InfiniteScrollCustomEvent) => {
-    onLoadMore?.();
-    void e.target.complete();
+  const handleInfinite = async (event: InfiniteScrollCustomEvent) => {
+    await onLoadMore?.();
+    await event.target.complete();
   };
 
   return (
     <div className={styles.pager}>
-      <p aria-live="polite" className={styles.status}>
-        {text}
-      </p>
+      {hasMore && (
+        <p aria-live="polite" className={styles.status}>
+          {shown} of {total} requests
+        </p>
+      )}
       <IonInfiniteScroll disabled={!hasMore} onIonInfinite={handleInfinite}>
-        <IonInfiniteScrollContent loadingSpinner="crescent" loadingText={`Loading more ${noun}…`} />
+        <IonInfiniteScrollContent loadingSpinner="crescent" loadingText="Loading more…" />
       </IonInfiniteScroll>
     </div>
   );

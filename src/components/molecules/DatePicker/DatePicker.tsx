@@ -1,41 +1,24 @@
 import { IonDatetime } from '@ionic/react';
+import type { FC } from 'react';
+
+import type { DateRange, IsoDate } from '../../../types/timeOff';
+import { toIsoDate, todayIso } from '../../../utils/dates';
 
 import styles from './DatePicker.module.scss';
+import { getHighlight, isPickingEnd, nextRange } from './DatePicker.utils';
 
-type DatePickerProps = {
-  start: string;
-  end: string;
-  min?: string;
-  onChange: (start: string, end: string) => void;
+type DatePickerProps = DateRange & {
+  min?: IsoDate;
+  onChange: (range: DateRange) => void;
 };
 
-const todayIso = () => {
-  const d = new Date();
-  const pad = (n: number) => String(n).padStart(2, '0');
-  return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
-};
-
-const DatePicker: React.FC<DatePickerProps> = ({ start, end, min }) => {
-  const pickingEnd = start && !end;
-
-  const highlight = (iso: string) => {
-    const day = iso.slice(0, 10);
-    if (day === start || day === end) {
-      return { textColor: 'var(--ion-color-primary-contrast)', backgroundColor: 'var(--ion-color-primary)' };
-    }
-    if (start && end && day > start && day < end) {
-      return {
-        textColor: 'var(--ion-color-notice-contrast)',
-        backgroundColor: 'rgba(var(--ion-color-primary-rgb), 0.1)',
-      };
-    }
-    return undefined;
-  };
+const DatePicker: FC<DatePickerProps> = ({ start, end, min, onChange }) => {
+  const range: DateRange = { start, end };
 
   return (
     <div className={styles.picker}>
       <p role="status" className={styles.hint}>
-        {pickingEnd ? 'Now tap the last day off' : 'Tap the first day off'}
+        {isPickingEnd(range) ? 'Now tap the last day off' : 'Tap the first day off'}
       </p>
       <IonDatetime
         className={styles.datetime}
@@ -43,8 +26,12 @@ const DatePicker: React.FC<DatePickerProps> = ({ start, end, min }) => {
         firstDayOfWeek={1}
         min={min ?? todayIso()}
         value={end || start || undefined}
-        highlightedDates={highlight}
-        onIonChange={() => {}}
+        highlightedDates={(iso) => getHighlight(range, toIsoDate(iso))}
+        onIonChange={({ detail: { value } }) => {
+          if (typeof value === 'string') {
+            onChange(nextRange(range, toIsoDate(value)));
+          }
+        }}
       />
     </div>
   );

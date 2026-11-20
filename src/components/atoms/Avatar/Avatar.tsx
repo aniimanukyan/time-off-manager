@@ -1,14 +1,14 @@
 import { IonAvatar } from '@ionic/react';
+import type { FC } from 'react';
 
 import styles from './Avatar.module.scss';
 
 type AvatarProps = {
   initials: string;
-  slot?: string;
 };
 
-const Avatar: React.FC<AvatarProps> = ({ initials, slot }) => (
-  <IonAvatar aria-hidden="true" slot={slot} className={styles.avatar}>
+const Avatar: FC<AvatarProps> = ({ initials }) => (
+  <IonAvatar aria-hidden="true" className={styles.avatar}>
     {initials}
   </IonAvatar>
 );

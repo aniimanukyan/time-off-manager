@@ -1,0 +1,25 @@
+.tabs {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.panel {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.spinner {
+  align-self: center;
+  margin: 24px 0;
+}

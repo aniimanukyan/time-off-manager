@@ -1,4 +1,5 @@
 import { IonSearchbar } from '@ionic/react';
+import type { FC } from 'react';
 
 import styles from './SearchBar.module.scss';
 
@@ -8,7 +9,7 @@ type SearchBarProps = {
   onChange: (value: string) => void;
 };
 
-const SearchBar: React.FC<SearchBarProps> = ({ value, placeholder = 'Search people' }) => (
+const SearchBar: FC<SearchBarProps> = ({ value, placeholder = 'Search people' }) => (
   <IonSearchbar
     value={value}
     placeholder={placeholder}

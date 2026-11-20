@@ -1,71 +1,57 @@
 import { IonItem } from '@ionic/react';
+import type { FC } from 'react';
 
-import { LEAVE_TYPE_COLORS, type LeaveType, type RequestStatus } from '../../../types/timeOff';
+import { LEAVE_TYPE_COLORS, LEAVE_TYPE_LABELS, type LeaveRequest } from '../../../types/timeOff';
+import { formatShortRange, pluralDays } from '../../../utils/dates';
+import { toInitials } from '../../../utils/names';
 import { Avatar, StatusBadge } from '../../atoms';
 
 import styles from './ListItem.module.scss';
 
-type ListItemExtraTone = 'heavy' | 'some' | 'none';
-
-type ListItemData = {
-  id: string;
-  title: string;
-  leaveType: LeaveType;
-  dates: string;
-  days: string;
-  status: RequestStatus;
-  initials?: string;
-  note?: string;
-  extra?: string;
-  extraTone?: ListItemExtraTone;
+type ListItemProps = LeaveRequest & {
+  onSelect?: (request: LeaveRequest) => void;
 };
 
-type ListItemProps = {
-  item: ListItemData;
-  onSelect?: (id: string) => void;
-};
+const getNote = (request: LeaveRequest) => (request.decision ? `“${request.decision}”` : undefined);
 
-const EXTRA_COLOR: Record<ListItemExtraTone, string> = {
-  heavy: 'coverage',
-  some: 'pending',
-  none: 'cancelled',
-};
+const ListItem: FC<ListItemProps> = ({ onSelect, ...request }) => {
+  const employee = 'employee' in request ? request.employee : undefined;
+  const typeLabel = LEAVE_TYPE_LABELS[request.leaveType];
+  const typeColor = `ion-color-${LEAVE_TYPE_COLORS[request.leaveType]}`;
+  const note = getNote(request);
 
-const ListItem: React.FC<ListItemProps> = ({ item, onSelect }) => (
-  <IonItem
-    button={!!onSelect}
-    detail={false}
-    lines="none"
-    className={styles.row}
-    onClick={onSelect ? () => onSelect(item.id) : undefined}
-  >
-    <div className={styles.content}>
-      {item.initials ? (
-        <Avatar initials={item.initials} />
-      ) : (
-        <span aria-hidden="true" className={`${styles.swatch} ion-color-${LEAVE_TYPE_COLORS[item.leaveType]}`}>
-          <span className={styles.swatchDot} />
-        </span>
-      )}
-      <span className={styles.body}>
-        <span className={styles.title}>{item.title}</span>
-        <span className={styles.meta}>
-          {item.dates} · {item.days}
-        </span>
-        {item.extra && (
-          <span title={item.extra} className={`${styles.extra} ion-color-${EXTRA_COLOR[item.extraTone ?? 'none']}`}>
-            {item.extra}
+  return (
+    <IonItem
+      button={!!onSelect}
+      detail={false}
+      lines="none"
+      className={styles.row}
+      onClick={onSelect ? () => onSelect(request) : undefined}
+    >
+      <div className={styles.content}>
+        {employee ? (
+          <Avatar initials={toInitials(employee)} />
+        ) : (
+          <span aria-hidden="true" className={`${styles.swatch} ${typeColor}`}>
+            <span className={styles.dot} />
           </span>
         )}
-        {item.note && (
-          <span title={item.note} className={styles.note}>
-            {item.note}
+        <span className={styles.body}>
+          <span className={styles.title}>{employee ?? typeLabel}</span>
+          <span className={styles.meta}>
+            {formatShortRange(request.start, request.end)} · {pluralDays(request.days)}
           </span>
-        )}
-      </span>
-      <StatusBadge status={item.status} />
-    </div>
-  </IonItem>
-);
+          {employee && <span className={`${styles.typeTag} ${typeColor}`}>{typeLabel}</span>}
+          {note && (
+            <span title={note} className={styles.note}>
+              {note}
+            </span>
+          )}
+        </span>
+        <StatusBadge status={request.status} />
+      </div>
+    </IonItem>
+  );
+};
 
 export default ListItem;

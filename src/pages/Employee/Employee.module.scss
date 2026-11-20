@@ -1,0 +1,32 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-width: 760px;
+  margin: 0 auto;
+  padding: calc(var(--ion-safe-area-top, 0px) + 16px) 16px 96px;
+}
+
+.balances {
+  display: flex;
+  gap: 8px;
+
+  > * {
+    flex: 1;
+    min-width: 0;
+  }
+}
+
+.footnote {
+  margin: 0;
+  font-size: var(--font-size-xs);
+  line-height: 18px;
+  color: var(--ion-color-medium);
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}

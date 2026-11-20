@@ -1,5 +1,5 @@
 import { IonContent, IonHeader, IonPage, IonTabBar, IonTitle, IonToolbar } from '@ionic/react';
-import { useState } from 'react';
+import { useState, type FC } from 'react';
 
 import {
   Avatar,
@@ -19,22 +19,26 @@ import {
   ListItem,
   ListPager,
   NavItem,
+  RoleSwitch,
   Timeline,
   TypeSelector,
 } from '../../components/molecules';
-import type { LeaveType } from '../../types/timeOff';
+import { usePageTitle } from '../../hooks/usePageTitle';
+import type { Role } from '../../state/SessionContext';
+import type { DateRange, LeaveType, Segment } from '../../types/timeOff';
 
 import styles from './Home.module.scss';
 
-// Temporary gallery of all atoms and molecules, until the real screens exist.
-const Home: React.FC = () => {
-  const [seg, setSeg] = useState('upcoming');
+const Home: FC = () => {
+  const [seg, setSeg] = useState<Segment>('upcoming');
   const [search, setSearch] = useState('');
   const [note, setNote] = useState('');
   const [toast, setToast] = useState(false);
   const [type, setType] = useState<LeaveType>('Vacation');
-  const [range, setRange] = useState({ start: '', end: '' });
+  const [range, setRange] = useState<DateRange>({ start: '', end: '' });
   const [shown, setShown] = useState(8);
+  const [role, setRole] = useState<Role>('employee');
+  usePageTitle('Components');
 
   return (
     <IonPage>
@@ -95,35 +99,16 @@ const Home: React.FC = () => {
             />
             <EmptyState title="All caught up" text="Select a request to review it here." />
             <Button label="Show toast" variant="secondary" onClick={() => setToast(true)} />
-            <Toast
-              isOpen={toast}
-              message="Approved · Jana will be notified"
-              onAction={() => setToast(false)}
-              onDismiss={() => setToast(false)}
-            />
+            <Toast isOpen={toast} message="Approved · Jana will be notified" onDismiss={() => setToast(false)} />
           </section>
 
           <h1 className={styles.heading}>Molecules</h1>
 
           <section className={styles.section} aria-label="Balance cards">
             <div className={styles.grid3}>
-              <BalanceCard
-                leaveType="Vacation"
-                label="Vacation"
-                value="12"
-                unit="of 25"
-                progress={0.48}
-                note="After 8 pending"
-              />
-              <BalanceCard leaveType="Sick" label="Sick" value="2" unit="used" progress={0.12} note="No annual limit" />
-              <BalanceCard
-                leaveType="Personal"
-                label="Personal"
-                value="1"
-                unit="of 3"
-                progress={0.33}
-                note="1 booked · 4 Dec"
-              />
+              <BalanceCard leaveType="Vacation" limit={25} available={12} progress={0.48} />
+              <BalanceCard leaveType="Sick" limit={null} used={2} progress={0.12} />
+              <BalanceCard leaveType="Personal" limit={3} available={1} progress={0.33} />
             </div>
           </section>
 
@@ -135,30 +120,20 @@ const Home: React.FC = () => {
             </IonTabBar>
           </section>
 
+          <section className={styles.section} aria-label="Role switch">
+            <RoleSwitch role={role} onChange={setRole} />
+          </section>
+
           <section className={styles.section} aria-label="Rows">
+            <ListItem id="u1" leaveType="Vacation" start="2026-12-21" end="2026-12-30" days={8} status="Pending" />
             <ListItem
-              item={{
-                id: 'u1',
-                title: 'Vacation',
-                leaveType: 'Vacation',
-                dates: '21 – 30 Dec',
-                days: '8 days',
-                status: 'Pending',
-                note: 'Waiting for Martin Kovář',
-              }}
-            />
-            <ListItem
-              item={{
-                id: 'u2',
-                title: 'Jana Nováková',
-                initials: 'JN',
-                leaveType: 'Personal',
-                dates: 'Fri 4 Dec',
-                days: '1 day',
-                status: 'Approved',
-                extra: '2 others off',
-                extraTone: 'heavy',
-              }}
+              id="u2"
+              employee="Jana Nováková"
+              leaveType="Personal"
+              start="2026-12-04"
+              end="2026-12-04"
+              days={1}
+              status="Approved"
             />
           </section>
 
@@ -176,11 +151,11 @@ const Home: React.FC = () => {
           </section>
 
           <section className={styles.section} aria-label="Date picker">
-            <DatePicker start={range.start} end={range.end} onChange={(start, end) => setRange({ start, end })} />
+            <DatePicker {...range} onChange={setRange} />
           </section>
 
           <section className={styles.section} aria-label="List pager">
-            <ListPager total={23} shown={shown} onLoadMore={() => setShown((s) => Math.min(s + 8, 23))} />
+            <ListPager total={23} shown={shown} onLoadMore={() => setShown((prev) => Math.min(prev + 8, 23))} />
           </section>
         </div>
       </IonContent>

@@ -1,5 +1,6 @@
 import { IonBadge, IonIcon, IonLabel, IonTabButton } from '@ionic/react';
 import { calendarOutline, checkboxOutline, sunnyOutline } from 'ionicons/icons';
+import type { FC } from 'react';
 
 import styles from './NavItem.module.scss';
 
@@ -21,7 +22,15 @@ const ICONS: Record<NavIcon, string> = {
   calendar: calendarOutline,
 };
 
-const NavItem = ({ label, icon, tab, href, active = false, badge = 0, onClick }: NavItemProps): React.JSX.Element => (
+const NavItem: FC<NavItemProps> & { isTabButton?: boolean } = ({
+  label,
+  icon,
+  tab,
+  href,
+  active = false,
+  badge = 0,
+  onClick,
+}) => (
   <IonTabButton tab={tab} href={href} selected={active} className={styles.tab} onClick={onClick}>
     <IonIcon aria-hidden="true" icon={ICONS[icon]} />
     <IonLabel>{label}</IonLabel>

@@ -4,7 +4,6 @@ $ink: #111114;
 
 $blue-ink: #123e9c;
 $blue-light: #e6eefd;
-$blue-bright: #8db2ff;
 $purple: #6d32d9;
 
 $green: #17622f;
@@ -72,7 +71,6 @@ $custom-colors: (
   /* App colors */
   --ion-color-surface: #{$white};
   --ion-color-cancel-border: #{$red-border};
-  --ion-color-toast-action: #{$blue-bright};
 }
 
 /* Custom colors: use as color="name" or add the .ion-color-name class */
